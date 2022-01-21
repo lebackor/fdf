@@ -7,17 +7,18 @@ CC	=	gcc
 
 CFLAGS	=	-Wall -Werror -Wextra
 
+MLXFLAG	=	-L minilibx-linux -lmlx -lXext -lX11
+
 NAME = fdf
 
 
 .c.o:
-		$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+		${CC} ${CFLAGS} ${MLXFLAG} -I includes -c $< -o ${<:.c=.o}
 
-all : ${NAME}
+all : ${CC} ${SRCS} ${CFLAGS} ${MLXFLAG}
 
-
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+${NAME} :	${CC} ${SRCS} ${CFLAGS} ${MLXFLAG}
+			@echo "Relink ..."
 
 clean :
 		rm -f ${OBJS}
