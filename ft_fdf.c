@@ -14,57 +14,100 @@
 
 
 
-int	get_len_file(int fd)
+int	get_len_file(char *av)
 {
 	int i;
+	s_data fd;
 	char *str;
 
 	i = 0;
-	//printf("%s", str);
-	while ((str = get_next_line(fd)) != NULL)
+	fd.fd = open(av, O_RDONLY);
+	while ((str = get_next_line(fd.fd)) != NULL)
 	{
 		i++;
 	//	printf("%s", str);
 	}
+	//close(fd);
+	free(str);
 	return (i);
 }
-
-int get_width(int fd)
+/*
+char **get_width(int fd)
 {
 	int i;
-	int k;
 	char *str;
 	char **s1;
 	i = 0;
-	k = 0;
 	//printf("%s", str);
 	str = get_next_line(fd);
 	s1 = ft_split(str, ' ');
 	while (s1[i])
 	 {
-		printf("[%s]", s1[i]);
+		//printf("[%s]", s1[i]);
 		i++;
 	 }
-	return (k);
+	return (s1);
+}
+*/
+
+int		ft_count_tab(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		i++;
+	}
+	return (i);
+}
+char	***get_total_width(char *av)
+{
+	int i;
+	int k;
+	int j = 0;
+	char ***str;
+	s_data tab;
+
+	i = 1;
+	k = get_len_file(av);
+	tab.fd = open(av, O_RDONLY);
+	//printf("%d\n", k);
+	str = malloc(sizeof(char **) * (k + 1));
+	//printf("[%s]", **str);
+	str[0] = ft_split(get_next_line(tab.fd), ' ');
+	//printf("len %d", ft_count_tab(str[0]));
+	while (i < k)
+	{
+		str[i] = ft_split(get_next_line(tab.fd), ' ');
+		if (ft_count_tab(str[0]) != ft_count_tab(str[i]))
+			return (NULL);
+		//printf("%s", *str[i]);
+		j = 0;
+		while (str[i][j])
+		{
+		//	printf("[%s]", str[i][j]);
+			j++;
+		}
+	//	printf("\n");
+		i++;
+	}
+	close(tab.fd);
+	return (str);
 }
 
-int	get_fd(char *str, int i)
+int	get_fd(char *av)
 {
-	int fd;
-	int d;
+	char	***str;
 
-	fd = open(str, O_RDONLY);
-	if (i == 0)
+	//fd = open(av, O_RDONLY);
+	str = get_total_width(av);
+	if(!str)
 	{
-		d = get_len_file(fd);
+		printf("WRONG MAP\n");
+		return (0);
 	}
-	else if (i == 1)
-	{
-		d = get_width(fd);
-	}
-	close(fd);
-	//printf("%d\n", d);
-	return (d);
+	return (1);
 }
 /*
 char *arg(char **av)
@@ -90,11 +133,8 @@ int main(int ac, char **av)
 	//int fd;
 	if (ac != 2)
 		return (0);
-	data.len = get_fd(av[1], 0);
-	//close(fd);
-	//fd = open(av[1], O_RDONLY);
-	data.width = get_fd(av[1], 1);
-	//printf("%d", data.width);
+	data.x = get_fd(av[1]);
+	printf("%d", data.len);
 	//close(fd);
 
 }
