@@ -82,7 +82,6 @@ char	***get_total_width(char *av)
 		str[i] = ft_split(get_next_line(tab.fd), ' ');
 		if (ft_count_tab(str[0]) != ft_count_tab(str[i]))
 			return (NULL);
-		//printf("%s", *str[i]);
 		j = 0;
 		while (str[i][j])
 		{
