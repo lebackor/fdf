@@ -86,10 +86,10 @@ char	***get_total_width(char *av)
 		j = 0;
 		while (str[i][j])
 		{
-		//	printf("[%s]", str[i][j]);
+			printf("[%s]", str[i][j]);
 			j++;
 		}
-	//	printf("\n");
+		printf("\n");
 		i++;
 	}
 	close(tab.fd);

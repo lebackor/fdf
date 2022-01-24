@@ -51,7 +51,7 @@ char	*str_endcpy(char *str, char *new_line)
 		k++;
 	if (new_line[k] == '\n')
 		str = ft_strcpy(str, &new_line[++k]);
-	new_line[k] = '\0';
+	new_line[--k] = '\0';
 	return (new_line);
 }
 
@@ -62,7 +62,7 @@ char	*str_n(char *str, char *buffer, char *new_line, int i)
 		if (*str == '\0' && *new_line == '\0')
 		{
 			free(buffer);
-			free(str);
+			//free(str);
 			free(new_line);
 			return (NULL);
 		}
