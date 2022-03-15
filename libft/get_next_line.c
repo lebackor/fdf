@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 int	ft_search_n(char *new_line)
 {
@@ -28,20 +28,6 @@ int	ft_search_n(char *new_line)
 	return (1);
 }
 
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 char	*str_endcpy(char *str, char *new_line)
 {
 	int	k;
@@ -51,7 +37,7 @@ char	*str_endcpy(char *str, char *new_line)
 		k++;
 	if (new_line[k] == '\n')
 		str = ft_strcpy(str, &new_line[++k]);
-	new_line[--k] = '\0';
+	new_line[k] = '\0';
 	return (new_line);
 }
 
@@ -62,7 +48,7 @@ char	*str_n(char *str, char *buffer, char *new_line, int i)
 		if (*str == '\0' && *new_line == '\0')
 		{
 			free(buffer);
-			//free(str);
+			free(str);
 			free(new_line);
 			return (NULL);
 		}
@@ -102,26 +88,3 @@ char	*get_next_line(int fd)
 	free(buffer);
 	return (new_line);
 }
-/*
-
-#include <stdio.h>
-int main(int ac, char **av)
-{
-    (void) ac;
-    (void) av;
-    int fd;
-    char *str;
-    int i;
-    
-    i = 0;
-    fd = open("g", O_RDONLY);
-   // fd = open("bible.txt", O_RDONLY);
-   while ((str = get_next_line(fd)) != NULL)
-   // while (i < 11)
-    {
-        printf("%s", str);
-        free(str);
-        i++;
-    }
-    //printf("i==%d\n", i);
-}*/

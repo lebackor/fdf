@@ -56,8 +56,13 @@ SRCS	=	ft_bzero.c \
 			ft_lstiter.c \
 			ft_lstmap.c	\
 			ft_strcpy.c \
-
-
+			ft_sort_int_tab.c\
+			ft_printf.c\
+			ft_putchar.c\
+			ft_putnbr.c\
+			ft_printf_utils.c\
+			ft_putstr.c\
+			
 OBJS	=	${SRCS:.c=.o}
 
 CC	=	gcc

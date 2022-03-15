@@ -1,27 +1,36 @@
-SRCS	=	ft_fdf.c \
+SRCS	=	so_long.c\
 
 
-OBJS	=	${SRCS:.c=.o}
+OBJS = ${SRCS:.c=.o}
 
 CC	=	gcc
 
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+LDFLAGS = -L libft -lft
 
-MLXFLAG	=	-L minilibx-linux -lmlx -lXext -lX11
+NAME = so_long
 
-NAME = fdf
+LIBFT = libft/libft.a
+
+CLEAN_FT	=	make fclean -C libft
+
+all : ${NAME}
+
+${NAME} :	${OBJS} $(LIBFT)
+	$(MAKE) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
+
+%.o: %.c
+	${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o}
 
 
-.c.o:
-		${CC} ${CFLAGS} ${MLXFLAG} -I includes -c $< -o ${<:.c=.o}
+$(LIBFT)	:
+	make -C libft
 
-all : ${CC} ${SRCS} ${CFLAGS} ${MLXFLAG}
-
-${NAME} :	${CC} ${SRCS} ${CFLAGS} ${MLXFLAG}
-			@echo "Relink ..."
 
 clean :
-		rm -f ${OBJS}
+		rm -f ${OBJS} ${LIBFT} 
+		${CLEAN_FT}
 
 fclean :	clean
 			rm -f ${NAME}
